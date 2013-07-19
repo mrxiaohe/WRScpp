@@ -1,0 +1,11 @@
+Package: WRScpp
+Type: Package
+Title: C++ sub-routines for the R package WRS
+Version: 1.0
+Date: 2013-07-18
+Author: Rand Wilcox, Xiao He
+Maintainer: Xiao He <hex@usc.edu>
+Description: This package contains C++ implementations of iterative routines originally coded in R. These sub-routines provide substantial performance boosts.
+License: GPL (>= 2)
+Depends: Rcpp (>= 0.10.3), RcppArmadillo (>= 0.3.900.0)
+LinkingTo: Rcpp, RcppArmadillo
