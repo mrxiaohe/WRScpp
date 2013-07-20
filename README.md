@@ -5,11 +5,19 @@ This package provides C++ sub-routines for several iterative procedures in the [
 
 ##Installation
 
-To install this package, three R packages are required:
-
-* `WRS`:
-	install.packages("")
+###To install this package, three R packages are required:
 
 * `RcppArmadillo` and `Rcpp`: These two packages allow convenient interface between `R` and `C++`. `RcppArmadillo` requires `Rcpp`, so installing the first one will automatically prompt `R` to install the latter.
-	install.packages("RcppArmadillo")     
+* `devtools`: This package allows R users to install packages hosted on Github. 
+
+	install.packages( c("RcppArmadillo", "devtools") )
+
+
+###Next, load `devtools` and install `WRScpp`:
+
+	library("devtools")
+	install_github(repo="WRScpp", username="mrxiaohe")
+
+	
+
 
