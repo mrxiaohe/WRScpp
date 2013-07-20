@@ -7,6 +7,7 @@ Author: Rand Wilcox, Xiao He
 Maintainer: Xiao He <hex@usc.edu>
 Description: This package contains C++ implementations of iterative routines originally coded in R. These sub-routines provide substantial performance boosts.
 License: GPL (>= 2)
-Depends: Rcpp (>= 0.10.3), RcppArmadillo (>= 0.3.900.0)
-LinkingTo: Rcpp, RcppArmadillo
-Built: R 3.0.1; x86_64-apple-darwin10.8.0; 2013-07-20 15:11:40 UTC; unix
+Depends: Rcpp (>= 0.10.2), RcppArmadillo (>= 0.3.900.0), MASS (>=
+        7.3-27), scatterplot3d (>= 0.3-33)
+LinkingTo: Rcpp, RcppArmadillo, MASS, scatterplot3d
+Built: R 3.0.1; x86_64-apple-darwin10.8.0; 2013-07-20 15:30:37 UTC; unix
