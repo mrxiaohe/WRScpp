@@ -1,7 +1,7 @@
 WRScpp
 ======
 
-This package provides C++ sub-routines for several iterative procedures in the [R package `WRS`](https://r-forge.r-project.org/projects/wrs/) for robust statistics by [Rand Wilcox](http://dornsife.usc.edu/cf/labs/wilcox/wilcox-faculty-display.cfm). These sub-routines provide substantial performance boosts.
+This package provides C++ sub-routines for several iterative procedures in the [R package `WRS`](https://r-forge.r-project.org/projects/wrs/) for robust statistics by [Rand Wilcox](http://dornsife.usc.edu/cf/labs/wilcox/wilcox-faculty-display.cfm). These C++ sub-routines provide performance boosts.
 
 ##[Installation]
 
@@ -150,3 +150,20 @@ Create another, larger dataset
     1   tsreg(dataset2[, 1:4], dataset2[, 5])          100  43.232    4.894    38.848    4.520           0         0
                
 
+
+
+####2. `tshdreg_C()`: Theil-Sen regression estimator
+
+This function uses Harrell-Davis estimator rather than the usual sample median. Also, the intercept is taken to be the median of the residuals.
+
+    benchmark( replications = 100, 
+               tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
+               tshdreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
+             )
+                                           test replications elapsed relative user.self sys.self user.child sys.child
+    2 tshdreg_C(dataset2[, 1:4], dataset2[, 5])          100  27.774    1.000    26.784    0.758          0         0
+    1   tshdreg(dataset2[, 1:4], dataset2[, 5])          100 145.014    5.221   140.692    3.050          0         0
+
+
+
+####3. `tshdreg_C()`: Theil-Sen regression estimator
