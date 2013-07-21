@@ -11,7 +11,8 @@ This package provides C++ sub-routines for several iterative procedures in the [
 * `devtools`: This package allows R users to install packages hosted on Github. 
 
 
-    install.packages( c("RcppArmadillo", "devtools") )
+      install.packages( c("RcppArmadillo", "devtools") )
+
 
 
 ####Next, load `devtools` and install the `WRScpp` binary:
