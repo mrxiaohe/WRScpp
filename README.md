@@ -126,7 +126,7 @@ Use Gauss-Seidel algorithm when there is more than one predictor.
 ![plot](http://img542.imageshack.us/img542/9886/l5z.png)
 
 
-(4). Compare runtime between `tsreg()` and `tsreg_C()` using `benchmark`. `tsreg()` is entirely coded in `R`, whereas portions of `tsreg_C()` are coded in C++.
+(4). Compare runtime between `tsreg()` and `tsreg_C()` using `benchmark()`. `tsreg()` is entirely coded in `R`, whereas portions of `tsreg_C()` are coded in C++.
 
 Create another, larger dataset
 
@@ -175,7 +175,7 @@ This function uses Harrell-Davis estimator rather than the usual sample median. 
 
 
 
-(2). Compare runtime between `tshdreg()` and `tshdreg_C()` using `benchmark`.
+(2). Compare runtime between `tshdreg()` and `tshdreg_C()` using `benchmark()`.
 
     benchmark( replications = 100, 
                tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
@@ -208,3 +208,16 @@ Slopes are selected such that some robust measure of variance of residuals is mi
 
 
 ![plot](http://img819.imageshack.us/img819/1843/gj5.png)
+
+
+
+(2). Compare performance between `stsreg()` and `stsreg_C()` using `system.time()`.
+
+    system.time( stsreg_C(dataset2[,1:4], dataset2[,5]) )
+      user  system elapsed 
+    24.679   0.234  25.002 
+
+    system.time( stsreg(dataset2[,1:4], dataset2[,5]) )
+       user  system elapsed 
+    839.375  25.478 867.326 
+
