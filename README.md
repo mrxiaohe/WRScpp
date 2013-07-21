@@ -10,11 +10,6 @@ This package provides C++ sub-routines for several iterative procedures in the [
 * `RcppArmadillo` and `Rcpp`: These two packages allow convenient interface between `R` and `C++`. `RcppArmadillo` requires `Rcpp`, so installing the first one will automatically prompt `R` to install the latter.
 * `devtools`: This package allows R users to install packages hosted on Github. 
 
-
-      install.packages( c("RcppArmadillo", "devtools") )
-
-
-
 ####Next, load `devtools` and install the `WRScpp` binary:
 
 	library("devtools")
