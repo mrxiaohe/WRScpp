@@ -126,7 +126,7 @@ Use Gauss-Seidel algorithm when there is more than one predictor.
 ![plot](http://img542.imageshack.us/img542/9886/l5z.png)
 
 
-(4). Compare runtime between `tsreg()` and `tsreg_C()` by doing 500 bootstrap samples using `regci()`. `tsreg()` is entirely coded in `R`, whereas a portion of `tsreg_C()` is coded in C++.
+(4). Compare runtime between `tsreg()` and `tsreg_C()` using `benchmark`. `tsreg()` is entirely coded in `R`, whereas portions of `tsreg_C()` are coded in C++.
 
 Create another, larger dataset
 
@@ -152,9 +152,30 @@ Create another, larger dataset
 
 
 
-####2. `tshdreg_C()`: Theil-Sen regression estimator
+####2. `tshdreg_C()`: A variation of Theil-Sen regression estimator
 
 This function uses Harrell-Davis estimator rather than the usual sample median. Also, the intercept is taken to be the median of the residuals.
+
+(1). Use this function on `dataset1`, and plot a regression line based on the result.
+
+    model.tshdreg <- with(dataset1, tshdreg(x, y))
+    model.tshdreg[-2]
+
+    $coef
+    [1] -0.09980145  0.94965936
+
+    $Strength.Assoc
+    [1] 0.7108241
+
+    $Explanatory.Power
+    [1] 0.5052709
+
+
+![plot](http://img842.imageshack.us/img842/784/sa15.png)
+
+
+
+(2). Compare runtime between `tshdreg()` and `tshdreg_C()` using `benchmark`.
 
     benchmark( replications = 100, 
                tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
@@ -166,4 +187,24 @@ This function uses Harrell-Davis estimator rather than the usual sample median. 
 
 
 
-####3. `tshdreg_C()`: Theil-Sen regression estimator
+####3. `stsreg_C()`: A variation of Theil-Sen regression estimator
+
+Slopes are selected such that some robust measure of variance of residuals is minimized.
+
+
+(1). Apply `stsreg_C()` to `dataset1` and plot a regression line based on the result.
+
+    model.stsreg <- with(dataset1, stsreg_C(x, y))
+    model.stsreg[-2]
+    
+    $coef
+    [1] -0.3424785  1.2573545
+
+    $Strength.Assoc
+    [1] 0.9411352
+
+    $Explanatory.Power
+    [1] 0.8857355
+
+
+![plot](http://img819.imageshack.us/img819/1843/gj5.png)
