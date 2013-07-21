@@ -189,7 +189,7 @@ This function uses Harrell-Davis estimator rather than the usual sample median. 
 
 ####3. `stsreg_C()`: A variation of Theil-Sen regression estimator
 
-Slopes are selected such that some robust measure of variance of residuals is minimized.
+Slopes are selected such that some robust measure of variance of residuals is minimized. By default, percentage bend midvariance (see the function `pbvar()`) is minimized.
 
 
 (1). Apply `stsreg_C()` to `dataset1` and plot a regression line based on the result.
