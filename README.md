@@ -220,4 +220,33 @@ Slopes are selected such that some robust measure of variance of residuals is mi
     system.time( stsreg(dataset2[,1:4], dataset2[,5]) )
        user  system elapsed 
     839.375  25.478 867.326 
+    
+
+
+####4. `tstsreg_C()`: A modified version of Theil-Sen regression estimator
+
+First use `stsreg_C()` to compute the initial estimate, next use the computed residuals to determine outliers, lastly do regular Theil-Sen on data with regression outliers removed.
+
+(1). Apply `tstreg_C()` on `dataset1`; plot a regression line.
+
+    model.tstsreg <- with(dataset1, tstsreg_C(x, y))
+    model.tstsreg[-2]
+   
+    $coef
+     Intercept            
+    0.04935162 1.24334983 
+
+    abline(model.tstsreg$coef, col="black")
+    
+![plot](http://img825.imageshack.us/img825/6753/uqkh.png)
+
+
+(2). Compare performance between `tstreg()` and `tstreg_C()` using `system.time()`.
+
+    system.time( tstsreg_C(dataset2[,1:4], dataset2[,5]) )
+      user  system elapsed 
+    25.517   0.281  26.299 
+    system.time( tstsreg(dataset2[,1:4], dataset2[,5]) )
+       user  system elapsed 
+    740.578  23.169 762.316 
 
