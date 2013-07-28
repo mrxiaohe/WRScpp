@@ -114,7 +114,7 @@ corfun=pbcor,plotit=FALSE,WARN=TRUE,HD=FALSE,...){
 		res<-temp1$res
 	} 
 	if(ncol(x)>1){
-		temp1<-.Call("tsreg_for", X=x, Y=y, IT=as.integer(iter), HD=as.integer(HD))
+		temp1<-.Call("tsreg_C", X=x, Y=y, IT=as.integer(iter), HD=as.integer(HD))
 		coef<-c(temp1$alpha,temp1$beta)
 		res<-temp1$res
 	}
@@ -366,7 +366,7 @@ skip_boot <- function(x, data, cop, MM, nboot){
 
 
 
-ddepGMC_C<-function(x, est=skip_boot, na.rm=TRUE, alpha=.05, grp=NA, nboot=500, plotit=TRUE, SEED=TRUE,...){
+ddepGMC_C<-function(x, est=skipSPR, na.rm=TRUE, alpha=.05, grp=NA, nboot=500, plotit=TRUE, SEED=TRUE,...){
 	extras <- list(...)     
 	require(parallel)
 	x <- as.matrix(x)
