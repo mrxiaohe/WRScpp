@@ -115,7 +115,7 @@ corfun=pbcor,plotit=FALSE,WARN=TRUE,HD=FALSE,...){
 	} 
 	if(ncol(x)>1){
 		temp1<-.Call("tsreg_C", X=x, Y=y, IT=as.integer(iter), HD=as.integer(HD))
-		coef<-c(temp1$alpha,temp1$beta)
+		coef<-temp1$coef
 		res<-temp1$res
 	}
 	yhat<-y-res
