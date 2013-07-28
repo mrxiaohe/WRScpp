@@ -366,7 +366,7 @@ skip_boot <- function(x, data, cop, MM, nboot){
 
 
 
-ddepGMC_C<-function(x, est=skipSPR, na.rm=TRUE, alpha=.05, grp=NA, nboot=500, plotit=TRUE, SEED=TRUE,...){
+ddepGMC_C<-function(x, est=skip_boot, na.rm=TRUE, alpha=.05, grp=NA, nboot=500, plotit=TRUE, SEED=TRUE,...){
 	extras <- list(...)     
 	require(parallel)
 	x <- as.matrix(x)
