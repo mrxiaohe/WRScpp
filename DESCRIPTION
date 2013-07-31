@@ -10,4 +10,4 @@ License: GPL (>= 2)
 Depends: Rcpp (>= 0.10.2), RcppArmadillo (>= 0.3.900.0), MASS (>=
         7.3-27), scatterplot3d (>= 0.3-33)
 LinkingTo: Rcpp, RcppArmadillo, MASS, scatterplot3d
-Built: R 3.0.1; x86_64-apple-darwin10.8.0; 2013-07-28 14:47:57 UTC; unix
+Built: R 3.0.1; x86_64-apple-darwin10.8.0; 2013-07-31 04:01:11 UTC; unix
