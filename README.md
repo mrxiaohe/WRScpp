@@ -106,7 +106,13 @@ Use Gauss-Seidel algorithm when there is more than one predictor.
     [1] 0.5114123
 
 
-(4). Compare runtime between tsreg() and tsreg_C() using benchmark(). tsreg() is entirely coded in R, whereas portions of tsreg_C() are coded in C++.
+    abline( model.tsreg$coef, col="blue" )
+
+![plot](http://imageshack.us/a/img542/9886/l5z.png)
+
+
+
+(4). Compare runtime between `tsreg()` and `tsreg_C()` using `benchmark()`. `tsreg()` is entirely coded in `R`, whereas portions of `tsreg_C()` are coded in `C++`.
 
 Create another, larger dataset
 
@@ -131,7 +137,7 @@ Create another, larger dataset
     
 
 
-####2. tshdreg_C(): A variation of Theil-Sen regression estimator
+####2. `tshdreg_C()`: A variation of Theil-Sen regression estimator
 
 This function uses Harrell-Davis estimator rather than the usual sample median. Also, the intercept is taken to be the median of the residuals.
 
@@ -150,7 +156,12 @@ This function uses Harrell-Davis estimator rather than the usual sample median. 
     [1] 0.5052709
 
 
-(2). Compare runtime between tshdreg() and tshdreg_C() using benchmark().
+    abline( model.tshdreg$coef, col="green")
+
+![plot](http://imageshack.us/a/img842/784/sa15.png)
+
+
+(2). Compare runtime between `tshdreg()` and `tshdreg_C()` using `benchmark()`.
 
     benchmark( replications = 100, 
                tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
@@ -161,11 +172,11 @@ This function uses Harrell-Davis estimator rather than the usual sample median. 
     1   tshdreg(dataset2[, 1:4], dataset2[, 5])          100 145.014    5.221   140.692    3.050          0         0
 
 
-####3. stsreg_C(): A variation of Theil-Sen regression estimator
+####3. `stsreg_C()`: A variation of Theil-Sen regression estimator
 
-Slopes are selected such that some robust measure of variance of residuals is minimized. By default, percentage bend midvariance (see the function pbvar()) is minimized.
+Slopes are selected such that some robust measure of variance of residuals is minimized. By default, percentage bend midvariance (see the function `pbvar()`) is minimized.
 
-(1). Apply stsreg_C() to dataset1 and plot a regression line based on the result.
+(1). Apply `stsreg_C()` to dataset1 and plot a regression line based on the result.
 
     model.stsreg <- with(dataset1, stsreg_C(x, y))
     model.stsreg[-2]
@@ -179,6 +190,12 @@ Slopes are selected such that some robust measure of variance of residuals is mi
     $Explanatory.Power
     [1] 0.8857355
 
+    abline( model.stsreg$coef, col="purple")
+
+![plot](http://imageshack.us/a/img819/1843/gj5.png)
+
+
+
 
 (2). Compare performance between stsreg() and stsreg_C() using system.time().
 
@@ -191,11 +208,11 @@ Slopes are selected such that some robust measure of variance of residuals is mi
     839.375  25.478 867.326 
 
 
-####4. tstsreg_C(): A modified version of Theil-Sen regression estimator
+####4. `tstsreg_C()`: A modified version of Theil-Sen regression estimator
 
-First use stsreg_C() to compute the initial estimate, next use the computed residuals to determine outliers, lastly do regular Theil-Sen on data with regression outliers removed.
+The function first uses `stsreg_C()` to compute the initial estimate, next uses the computed residuals to determine outliers, lastly does regular Theil-Sen on data with regression outliers removed.
 
-(1). Apply tstreg_C() on dataset1; plot a regression line.
+(1). Apply `tstreg_C()` on dataset1; plot a regression line.
 
     model.tstsreg <- with(dataset1, tstsreg_C(x, y))
     model.tstsreg[-2]
@@ -206,8 +223,10 @@ First use stsreg_C() to compute the initial estimate, next use the computed resi
 
     abline(model.tstsreg$coef, col="black")
 
+![plot](http://imageshack.us/a/img825/6753/uqkh.png)
 
-(2). Compare performance between tstreg() and tstreg_C() using system.time().
+
+(2). Compare performance between `tstreg()` and `tstreg_C()` using `system.time()`.
 
     system.time( tstsreg_C(dataset2[,1:4], dataset2[,5]) )
       user  system elapsed 
