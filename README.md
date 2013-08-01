@@ -110,101 +110,108 @@ Use Gauss-Seidel algorithm when there is more than one predictor.
 
 Create another, larger dataset
 
-set.seed(1); dataset2 <- matrix(rnorm(1000), ncol=5)
-head(dataset2)
-           [,1]       [,2]       [,3]       [,4]        [,5]
-[1,] -0.6264538  0.4094018  1.0744410 -0.3410670 -1.08690882
-[2,]  0.1836433  1.6888733  1.8956548  1.5024245 -1.82608301
-[3,] -0.8356286  1.5865884 -0.6029973  0.5283077  0.99528181
-[4,]  1.5952808 -0.3309078 -0.3908678  0.5421914 -0.01186178
-[5,]  0.3295078 -2.2852355 -0.4162220 -0.1366734 -0.59962839
-[6,] -0.8204684  2.4976616 -0.3756574 -1.1367339 -0.17794799
+    set.seed(1); dataset2 <- matrix(rnorm(1000), ncol=5)
+    head(dataset2)
+               [,1]       [,2]       [,3]       [,4]        [,5]
+    [1,] -0.6264538  0.4094018  1.0744410 -0.3410670 -1.08690882
+    [2,]  0.1836433  1.6888733  1.8956548  1.5024245 -1.82608301
+    [3,] -0.8356286  1.5865884 -0.6029973  0.5283077  0.99528181
+    [4,]  1.5952808 -0.3309078 -0.3908678  0.5421914 -0.01186178
+    [5,]  0.3295078 -2.2852355 -0.4162220 -0.1366734 -0.59962839
+    [6,] -0.8204684  2.4976616 -0.3756574 -1.1367339 -0.17794799
 
 
-benchmark( replications = 100, 
-           tsreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
-           tsreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
-         )
-                                     test replications elapsed relative user.self sys.self  user.child sys.child
-2 tsreg_C(dataset2[, 1:4], dataset2[, 5])          100   8.834    1.000     8.473    0.388           0         0
-1   tsreg(dataset2[, 1:4], dataset2[, 5])          100  43.232    4.894    38.848    4.520           0         0
-2. tshdreg_C(): A variation of Theil-Sen regression estimator
+    benchmark( replications = 100, 
+               tsreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
+               tsreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
+             )
+                                         test replications elapsed relative user.self sys.self  user.child sys.child
+    2 tsreg_C(dataset2[, 1:4], dataset2[, 5])          100   8.834    1.000     8.473    0.388           0         0
+    1   tsreg(dataset2[, 1:4], dataset2[, 5])          100  43.232    4.894    38.848    4.520           0         0
+    
+
+
+####2. tshdreg_C(): A variation of Theil-Sen regression estimator
 
 This function uses Harrell-Davis estimator rather than the usual sample median. Also, the intercept is taken to be the median of the residuals.
 
 (1). Use this function on dataset1, and plot a regression line based on the result.
 
-model.tshdreg <- with(dataset1, tshdreg(x, y))
-model.tshdreg[-2]
+    model.tshdreg <- with(dataset1, tshdreg(x, y))
+    model.tshdreg[-2]
 
-$coef
-[1] -0.09980145  0.94965936
+    $coef
+    [1] -0.09980145  0.94965936
+    
+    $Strength.Assoc
+    [1] 0.7108241
 
-$Strength.Assoc
-[1] 0.7108241
-
-$Explanatory.Power
-[1] 0.5052709
+    $Explanatory.Power
+    [1] 0.5052709
 
 
 (2). Compare runtime between tshdreg() and tshdreg_C() using benchmark().
 
-benchmark( replications = 100, 
-           tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
-           tshdreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
-         )
-                                       test replications elapsed relative user.self sys.self user.child sys.child
-2 tshdreg_C(dataset2[, 1:4], dataset2[, 5])          100  27.774    1.000    26.784    0.758          0         0
-1   tshdreg(dataset2[, 1:4], dataset2[, 5])          100 145.014    5.221   140.692    3.050          0         0
-3. stsreg_C(): A variation of Theil-Sen regression estimator
+    benchmark( replications = 100, 
+               tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
+               tshdreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
+             )
+                                           test replications elapsed relative user.self sys.self user.child sys.child
+    2 tshdreg_C(dataset2[, 1:4], dataset2[, 5])          100  27.774    1.000    26.784    0.758          0         0
+    1   tshdreg(dataset2[, 1:4], dataset2[, 5])          100 145.014    5.221   140.692    3.050          0         0
+
+
+####3. stsreg_C(): A variation of Theil-Sen regression estimator
 
 Slopes are selected such that some robust measure of variance of residuals is minimized. By default, percentage bend midvariance (see the function pbvar()) is minimized.
 
 (1). Apply stsreg_C() to dataset1 and plot a regression line based on the result.
 
-model.stsreg <- with(dataset1, stsreg_C(x, y))
-model.stsreg[-2]
+    model.stsreg <- with(dataset1, stsreg_C(x, y))
+    model.stsreg[-2]
 
-$coef
-[1] -0.3424785  1.2573545
+    $coef
+    [1] -0.3424785  1.2573545
 
-$Strength.Assoc
-[1] 0.9411352
+    $Strength.Assoc
+    [1] 0.9411352
 
-$Explanatory.Power
-[1] 0.8857355
+    $Explanatory.Power
+    [1] 0.8857355
 
 
 (2). Compare performance between stsreg() and stsreg_C() using system.time().
 
-system.time( stsreg_C(dataset2[,1:4], dataset2[,5]) )
-  user  system elapsed 
-24.679   0.234  25.002 
+    system.time( stsreg_C(dataset2[,1:4], dataset2[,5]) )
+      user  system elapsed 
+    24.679   0.234  25.002 
 
-system.time( stsreg(dataset2[,1:4], dataset2[,5]) )
-   user  system elapsed 
-839.375  25.478 867.326 
-4. tstsreg_C(): A modified version of Theil-Sen regression estimator
+    system.time( stsreg(dataset2[,1:4], dataset2[,5]) )
+       user  system elapsed 
+    839.375  25.478 867.326 
+
+
+####4. tstsreg_C(): A modified version of Theil-Sen regression estimator
 
 First use stsreg_C() to compute the initial estimate, next use the computed residuals to determine outliers, lastly do regular Theil-Sen on data with regression outliers removed.
 
 (1). Apply tstreg_C() on dataset1; plot a regression line.
 
-model.tstsreg <- with(dataset1, tstsreg_C(x, y))
-model.tstsreg[-2]
+    model.tstsreg <- with(dataset1, tstsreg_C(x, y))
+    model.tstsreg[-2]
 
-$coef
- Intercept            
-0.04935162 1.24334983 
+    $coef
+     Intercept            
+    0.04935162 1.24334983 
 
-abline(model.tstsreg$coef, col="black")
+    abline(model.tstsreg$coef, col="black")
 
 
 (2). Compare performance between tstreg() and tstreg_C() using system.time().
 
-system.time( tstsreg_C(dataset2[,1:4], dataset2[,5]) )
-  user  system elapsed 
-25.517   0.281  26.299 
-system.time( tstsreg(dataset2[,1:4], dataset2[,5]) )
-   user  system elapsed 
-740.578  23.169 762.316 
+    system.time( tstsreg_C(dataset2[,1:4], dataset2[,5]) )
+      user  system elapsed 
+    25.517   0.281  26.299 
+    system.time( tstsreg(dataset2[,1:4], dataset2[,5]) )
+       user  system elapsed 
+    740.578  23.169 762.316 
