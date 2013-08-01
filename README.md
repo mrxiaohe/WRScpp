@@ -2,7 +2,7 @@ WRScpp
 ======
 
 
-This package provides `C++` sub-routines for several iterative procedures in the `R` package `WRS` for robust statistics by Rand Wilcox. These `C++` sub-routines provide performance boosts.
+This package provides `C++` sub-routines for several iterative procedures in the `R` package `WRS` for robust statistics by [Dr. Rand Wilcox](http://dornsife.usc.edu/cf/labs/wilcox/wilcox-faculty-display.cfm). These `C++` sub-routines can provide performance boosts.
 
 ###[Installation]
 
