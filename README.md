@@ -234,3 +234,7 @@ The function first uses `stsreg_C()` to compute the initial estimate, next uses 
     system.time( tstsreg(dataset2[,1:4], dataset2[,5]) )
        user  system elapsed 
     740.578  23.169 762.316 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/mrxiaohe/wrscpp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
