@@ -21,7 +21,7 @@ This package provides `C++` sub-routines for several iterative procedures in the
     install_github(repo="WRScpp", username="mrxiaohe")  
 
 
-###[Examples]
+###[Some examples]
 
 Load `WRScpp` and `WRS`:
 
