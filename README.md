@@ -27,7 +27,7 @@ The raw code is in [here](https://github.com/mrxiaohe/robustmethods_cplusplus).
     install_github(repo="WRScpp", username="mrxiaohe")  
 
 
-###[Some examples]
+###[Examples of a subset of functions]
 
 Load `WRScpp` and `WRS`:
 
