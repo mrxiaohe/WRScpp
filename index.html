@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Wrscpp by mrxiaohe</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Wrscpp</h1>
+        <p>C++ Subroutines for the R package WRS</p>
+
+        <p class="view"><a href="https://github.com/mrxiaohe/WRScpp">View the Project on GitHub <small>mrxiaohe/WRScpp</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/mrxiaohe/WRScpp/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/mrxiaohe/WRScpp/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/mrxiaohe/WRScpp">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="wrscpp" class="anchor" href="#wrscpp" aria-hidden="true"><span class="octicon octicon-link"></span></a>WRScpp</h1>
+
+<p>This package provides <code>C++</code> sub-routines for several iterative procedures in the <code>R</code> package <code>WRS</code> for robust statistics by <a href="http://dornsife.usc.edu/cf/labs/wilcox/wilcox-faculty-display.cfm">Dr. Rand Wilcox</a>. These <code>C++</code> sub-routines can provide substantial performance boosts. </p>
+
+<p>A 64-bit Linux version is compiled by <a href="https://github.com/JoeJohnston/">Joe Johnston</a> and can be obtained here <a href="https://github.com/JoeJohnston/WRScppLin64">here</a></p>
+
+<p>A 64-bit Windows version can be obtained <a href="http://github.com/mrxiaohe/WRScppWIN">here</a></p>
+
+<p>The raw code is in <a href="https://github.com/mrxiaohe/robustmethods_cplusplus">here</a>. </p>
+
+<h3>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>[Installation]</h3>
+
+<h4>
+<a id="to-install-this-package-four-r-packages-are-required" class="anchor" href="#to-install-this-package-four-r-packages-are-required" aria-hidden="true"><span class="octicon octicon-link"></span></a>To install this package, four R packages are required:</h4>
+
+<ul>
+<li><code>WRS</code></li>
+<li>
+<code>RcppArmadillo</code> and <code>Rcpp</code>: These two packages allow convenient interface between R and C++. <code>RcppArmadillo</code> requires <code>Rcpp</code>, so installing the first one will automatically prompt R to install the latter.</li>
+<li>
+<p><code>devtools</code>: This package allows R users to install packages hosted on Github.</p>
+
+<pre><code>install.packages("WRS", repos="http://R-Forge.R-project.org", type="source")
+install.packages( c("RcppArmadillo", "devtools") )
+</code></pre>
+</li>
+</ul>
+
+<h4>
+<a id="next-load-devtools-and-install-the-wrscpp-binary" class="anchor" href="#next-load-devtools-and-install-the-wrscpp-binary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Next, load devtools and install the WRScpp binary:</h4>
+
+<pre><code>library("devtools")
+install_github(repo="WRScpp", username="mrxiaohe")  
+</code></pre>
+
+<h3>
+<a id="examples-of-a-subset-of-functions" class="anchor" href="#examples-of-a-subset-of-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>[Examples of a subset of functions]</h3>
+
+<p>Load <code>WRScpp</code> and <code>WRS</code>:</p>
+
+<pre><code>library("WRScpp")
+library("WRS")
+</code></pre>
+
+<p>Also load <code>rbenchmark</code> for performance benchmarks:</p>
+
+<pre><code>#install.packages("rbenchmark")     #If it hasn't been installed yet.
+library("rbenchmark")
+</code></pre>
+
+<p>Create a mock dataset called dataset1 using the code below:</p>
+
+<pre><code>dataset1&lt;-structure(list(y=c(-1.49719416897806,  -1.04139301128124,   0.0945236304367192, 2.34517600028403,  -2.01910934921224, 
+                              0.738818483718415, -1.29894622500239,  -2.28749064172037,  -1.83460914213215,   1.7264401742697, 
+                             -0.282651383157718, -0.86805194949488,  -0.864427449770363,  1.3890252146112,   -1.06755713953516, 
+                             -2.32897163610783,   1.66038960720445,   1.61487788113575,   1.0899088587434,    1.59281468275878, 
+                             -3.92950882381207,  -2.86897048491236,   0.756543092818702,  0.75605628995123,  -1.94551222893336, 
+                             -0.521647504402827,  0.750976521143092,  2.05661942206825,  -0.0553654356461042, 1.83487282390805, 
+                             -0.681331876121451, -1.09742432884331,   0.809885352209668, -1.75444757180733,  -1.32646138930983, 
+                              0.93932182852857,   2.69573032525144,   1.19980666244453,   2.66656782068436,  -2.04469844361269, 
+                              2.25443895842938,  -0.287436324399811, -0.646793604946014, -1.12134602060874,  -0.123057506010716, 
+                              3.40147762961413,  -0.105013757259212,  2.57888932230486,  -0.248784082384957, -0.80495910311552, 
+                             -1.62736886754023,  -1.80623698171649,   0.0826863988021116,-1.02443966620053,  -0.624640883344864), 
+                       x = c(-0.414242088066754,  0.0475817644136152,-0.815134097927552,  0.578444566236884, -0.459034615425856, 
+                              0.809378901441766, -0.977367705972685, -1.67738162375379,  -0.430291674794372,  1.42019731595199, 
+                             -0.749035091787927, -1.35225060418292,  -0.492196888552811,  0.539778435067201,  0.0459914831995694, 
+                             -1.2521152391345,    1.00360926349214,   1.09644063218488,   0.508112310623724,  1.32898360956295, 
+                             -1.5116989382724,   -1.80654236075974,   1.06240878829949,  -0.091275817909321, -0.570211504099203, 
+                             -0.268748606177556,  0.764654371144826,  1.9589087924292,   -0.906694839411102,  0.450015221346758, 
+                             -0.254560403793998, -1.30082788198172,   1.15863187888594,  -1.61536768356543,  -0.858653684897159, 
+                              1.13914138747698,   0.775779787679006,  0.267099868753253,  1.32191674807275,  -0.23978424525859,
+                              1.93490877730752,   1.08101027023282,  -1.51349689876255,  -0.758066482747475, -0.592268993080326, 
+                              0.676081370171539, -0.342776942447623,  1.0517207133769,   -0.39294982859476,   0.622178484006425, 
+                              6.22656137599703,   6.45244734765708,   8.50469010153436,   6.24821960890362,   7.56808156590792
+                              )), .Names = c("y", "x"), row.names = c(NA, -55L), class = "data.frame")
+</code></pre>
+
+<h4>
+<a id="1-tsreg_c-theil-sen-regression-estimator" class="anchor" href="#1-tsreg_c-theil-sen-regression-estimator" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. <code>tsreg_C()</code>: Theil-Sen regression estimator</h4>
+
+<p>Use Gauss-Seidel algorithm when there is more than one predictor.</p>
+
+<p>(1). Create a scatter plot for this dataset:</p>
+
+<pre><code>plot( y ~ x, dataset1 )
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img542/717/6ts.png" alt="plot"></p>
+
+<p>(2). Run the least squares linear regression using <code>lm()</code>, and plot a regression line based on the result.</p>
+
+<pre><code>model.lm &lt;- lm( y ~ x, data = dataset1 )
+summary(model.lm)
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -0.17700    0.22667  -0.781    0.438
+x            0.13528    0.09723   1.391    0.170
+
+Residual standard error: 1.617 on 53 degrees of freedom
+Multiple R-squared:  0.03524,   Adjusted R-squared:  0.01703 
+F-statistic: 1.936 on 1 and 53 DF,  p-value: 0.1699
+
+abline( model.lm, col="red" )
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img812/6629/qg63.png" alt="plot"></p>
+
+<p>(3). Run Theil-Sen regression estimator <code>tsreg_C()</code>, and plot a regression line based on the result.</p>
+
+<pre><code>model.tsreg &lt;- with(dataset1, tsreg(x, y))
+
+model.tsreg[-2]                 #Display results but suppress residuals
+$coef
+ Intercept            
+-0.3281116  0.9554134 
+
+$Strength.Assoc
+[1] 0.715131
+
+$Explanatory.Power
+[1] 0.5114123
+
+
+abline( model.tsreg$coef, col="blue" )
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img542/9886/l5z.png" alt="plot"></p>
+
+<p>(4). Compare runtime between <code>tsreg()</code> and <code>tsreg_C()</code> using <code>benchmark()</code>. <code>tsreg()</code> is entirely coded in <code>R</code>, whereas portions of <code>tsreg_C()</code> are coded in <code>C++</code>.</p>
+
+<p>Create another, larger dataset</p>
+
+<pre><code>set.seed(1); dataset2 &lt;- matrix(rnorm(1000), ncol=5)
+head(dataset2)
+           [,1]       [,2]       [,3]       [,4]        [,5]
+[1,] -0.6264538  0.4094018  1.0744410 -0.3410670 -1.08690882
+[2,]  0.1836433  1.6888733  1.8956548  1.5024245 -1.82608301
+[3,] -0.8356286  1.5865884 -0.6029973  0.5283077  0.99528181
+[4,]  1.5952808 -0.3309078 -0.3908678  0.5421914 -0.01186178
+[5,]  0.3295078 -2.2852355 -0.4162220 -0.1366734 -0.59962839
+[6,] -0.8204684  2.4976616 -0.3756574 -1.1367339 -0.17794799
+
+
+benchmark( replications = 100, 
+           tsreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
+           tsreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
+         )
+                                     test replications elapsed relative user.self sys.self  user.child sys.child
+2 tsreg_C(dataset2[, 1:4], dataset2[, 5])          100   8.834    1.000     8.473    0.388           0         0
+1   tsreg(dataset2[, 1:4], dataset2[, 5])          100  43.232    4.894    38.848    4.520           0         0
+</code></pre>
+
+<h4>
+<a id="2-tshdreg_c-a-variation-of-theil-sen-regression-estimator" class="anchor" href="#2-tshdreg_c-a-variation-of-theil-sen-regression-estimator" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. <code>tshdreg_C()</code>: A variation of Theil-Sen regression estimator</h4>
+
+<p>This function uses Harrell-Davis estimator rather than the usual sample median. Also, the intercept is taken to be the median of the residuals.</p>
+
+<p>(1). Use this function on dataset1, and plot a regression line based on the result.</p>
+
+<pre><code>model.tshdreg &lt;- with(dataset1, tshdreg(x, y))
+model.tshdreg[-2]
+
+$coef
+[1] -0.09980145  0.94965936
+
+$Strength.Assoc
+[1] 0.7108241
+
+$Explanatory.Power
+[1] 0.5052709
+
+
+abline( model.tshdreg$coef, col="green")
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img842/784/sa15.png" alt="plot"></p>
+
+<p>(2). Compare runtime between <code>tshdreg()</code> and <code>tshdreg_C()</code> using <code>benchmark()</code>.</p>
+
+<pre><code>benchmark( replications = 100, 
+           tshdreg( x=dataset2[, 1:4], y=dataset2[, 5] ),
+           tshdreg_C( x=dataset2[, 1:4], y=dataset2[, 5] )
+         )
+                                       test replications elapsed relative user.self sys.self user.child sys.child
+2 tshdreg_C(dataset2[, 1:4], dataset2[, 5])          100  27.774    1.000    26.784    0.758          0         0
+1   tshdreg(dataset2[, 1:4], dataset2[, 5])          100 145.014    5.221   140.692    3.050          0         0
+</code></pre>
+
+<h4>
+<a id="3-stsreg_c-a-variation-of-theil-sen-regression-estimator" class="anchor" href="#3-stsreg_c-a-variation-of-theil-sen-regression-estimator" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. <code>stsreg_C()</code>: A variation of Theil-Sen regression estimator</h4>
+
+<p>Slopes are selected such that some robust measure of variance of residuals is minimized. By default, percentage bend midvariance (see the function <code>pbvar()</code>) is minimized.</p>
+
+<p>(1). Apply <code>stsreg_C()</code> to dataset1 and plot a regression line based on the result.</p>
+
+<pre><code>model.stsreg &lt;- with(dataset1, stsreg_C(x, y))
+model.stsreg[-2]
+
+$coef
+[1] -0.3424785  1.2573545
+
+$Strength.Assoc
+[1] 0.9411352
+
+$Explanatory.Power
+[1] 0.8857355
+
+abline( model.stsreg$coef, col="purple")
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img819/1843/gj5.png" alt="plot"></p>
+
+<p>(2). Compare performance between stsreg() and stsreg_C() using system.time().</p>
+
+<pre><code>system.time( stsreg_C(dataset2[,1:4], dataset2[,5]) )
+  user  system elapsed 
+24.679   0.234  25.002 
+
+system.time( stsreg(dataset2[,1:4], dataset2[,5]) )
+   user  system elapsed 
+839.375  25.478 867.326 
+</code></pre>
+
+<h4>
+<a id="4-tstsreg_c-a-modified-version-of-theil-sen-regression-estimator" class="anchor" href="#4-tstsreg_c-a-modified-version-of-theil-sen-regression-estimator" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. <code>tstsreg_C()</code>: A modified version of Theil-Sen regression estimator</h4>
+
+<p>The function first uses <code>stsreg_C()</code> to compute the initial estimate, next uses the computed residuals to determine outliers, lastly does regular Theil-Sen on data with regression outliers removed.</p>
+
+<p>(1). Apply <code>tstreg_C()</code> on dataset1; plot a regression line.</p>
+
+<pre><code>model.tstsreg &lt;- with(dataset1, tstsreg_C(x, y))
+model.tstsreg[-2]
+
+$coef
+ Intercept            
+0.04935162 1.24334983 
+
+abline(model.tstsreg$coef, col="black")
+</code></pre>
+
+<p><img src="http://imageshack.us/a/img825/6753/uqkh.png" alt="plot"></p>
+
+<p>(2). Compare performance between <code>tstreg()</code> and <code>tstreg_C()</code> using <code>system.time()</code>.</p>
+
+<pre><code>system.time( tstsreg_C(dataset2[,1:4], dataset2[,5]) )
+  user  system elapsed 
+25.517   0.281  26.299 
+system.time( tstsreg(dataset2[,1:4], dataset2[,5]) )
+   user  system elapsed 
+740.578  23.169 762.316 
+</code></pre>
+
+<p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/mrxiaohe/wrscpp/trend.png" alt="Bitdeli Badge"></a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/mrxiaohe">mrxiaohe</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
